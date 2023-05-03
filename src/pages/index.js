@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({movies}) {
   // console.log(movies.results)
+  console.log(movies.id)
   const data = movies?.results || [];
   return (
     <>
@@ -33,13 +34,14 @@ export default function Home({movies}) {
 
 //getServerSideProps
 
-export async function getServerSideProps(context){
+export async function getServerSideProps(){
   const url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=1`
-  const respond = await fetch(url);
-  if(!respond){
+  const response = await fetch(url);
+
+  if(!response){
     console.log("Error fetching data")
   }
-  const movies = await respond.json();
+  const movies = await response.json();
   if(!movies){
     return{
       props: {
